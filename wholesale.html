@@ -421,7 +421,7 @@
 </div>
 
 <script>
-  // ── EmailJS config — replace these 4 values after setting up EmailJS ──
+  // ── EmailJS config — Replace these values with your actual EmailJS dashboard credentials ──
   const EMAILJS_PUBLIC_KEY     = 'YOUR_EMAILJS_PUBLIC_KEY';
   const EMAILJS_SERVICE_ID     = 'YOUR_SERVICE_ID';
   const EMAILJS_TEMPLATE_ADMIN = 'YOUR_TEMPLATE_ID_ADMIN';
@@ -444,7 +444,7 @@
     message:           { max: 1000 }
   };
 
-  // ── RATE LIMITING — max 3 submissions per 15 minutes (stored in memory only) ──
+  // ── RATE LIMITING ──
   const RATE_LIMIT = { max: 3, windowMs: 15 * 60 * 1000 };
   let submissions = [];
 
@@ -454,7 +454,7 @@
     return submissions.length >= RATE_LIMIT.max;
   }
 
-  // ── SANITISE — strip HTML tags and trim, enforce max length ──
+  // ── SANITISE ──
   function sanitise(str, maxLen) {
     if (typeof str !== 'string') return '';
     return str
@@ -486,39 +486,32 @@
   function validateForm() {
     let ok = true;
 
-    // Company name — letters, numbers, spaces, common punctuation only
     const company = val('company_name');
     if (!company || company.length < 2) { showError('company_name','err-company',true); ok=false; }
     else { showError('company_name','err-company',false); }
 
-    // ABN — exactly 11 digits (spaces stripped)
     const abn = document.getElementById('abn').value.replace(/\s/g,'');
     if (!abn || !/^\d{11}$/.test(abn)) { showError('abn','err-abn',true); ok=false; }
     else { showError('abn','err-abn',false); }
 
-    // Contact name
     const cname = val('contact_name');
     if (!cname || cname.length < 2) { showError('contact_name','err-contact',true); ok=false; }
     else { showError('contact_name','err-contact',false); }
 
-    // Phone — digits, spaces, +, -, () only; min 8 digits
     const rawPhone = document.getElementById('phone').value.trim();
     const digitsOnly = rawPhone.replace(/[\s\-\+\(\)]/g,'');
     if (!rawPhone || !/^[\d\s\+\-\(\)]{8,20}$/.test(rawPhone) || digitsOnly.length < 8) {
       showError('phone','err-phone',true); ok=false;
     } else { showError('phone','err-phone',false); }
 
-    // Email — RFC-compliant pattern, max 254 chars
     const email = document.getElementById('email').value.trim();
     const emailRe = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
     if (!email || !emailRe.test(email) || email.length > 254) {
       showError('email','err-email',true); ok=false;
     } else { showError('email','err-email',false); }
 
-    // Postcode — exactly 4 digits if provided
     const pc = document.getElementById('postcode').value.trim();
     if (pc && !/^\d{4}$/.test(pc)) {
-      // Just silently clean it — not mandatory
       document.getElementById('postcode').value = pc.replace(/\D/g,'').slice(0,4);
     }
 
@@ -537,15 +530,12 @@
     success.style.display = 'none';
     errorBox.style.display = 'none';
 
-    // ── HONEYPOT CHECK — bots fill hidden field, humans don't ──
     if (document.getElementById('honeypot').value !== '') {
-      // Silently reject — don't tell the bot it failed
       success.style.display = 'block';
       form.reset();
       return;
     }
 
-    // ── RATE LIMIT CHECK ──
     if (isRateLimited()) {
       errorBox.innerHTML = '⚠️ <strong>Too many submissions.</strong><br>Please wait 15 minutes before trying again, or email us at <a href="mailto:info@aviinternational.com.au">info@aviinternational.com.au</a>.';
       errorBox.style.display = 'block';
@@ -562,7 +552,6 @@
       dateStyle: 'long', timeStyle: 'short', timeZone: 'Australia/Sydney'
     });
 
-    // All values sanitised before sending
     const params = {
       company_name:       val('company_name'),
       abn:                document.getElementById('abn').value.replace(/\s/g,''),
@@ -580,17 +569,17 @@
     };
 
     try {
+      // Sends data to EmailJS API endpoint mapped seamlessly via your custom keys
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ADMIN, params);
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_USER,  params);
 
-      submissions.push(Date.now()); // Record successful submission for rate limiting
+      submissions.push(Date.now());
 
       success.style.display = 'block';
       form.reset();
       form.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     } catch (err) {
-      // Never log form data to console — only log a generic error code
       console.error('Submission error:', err.status || 'unknown');
       errorBox.innerHTML = '⚠️ <strong>Something went wrong.</strong><br>Please try again or email us directly at <a href="mailto:info@aviinternational.com.au">info@aviinternational.com.au</a>.';
       errorBox.style.display = 'block';
@@ -601,14 +590,12 @@
     }
   });
 
-  // Clear error state on input
   ['company_name','abn','contact_name','phone','email'].forEach(id => {
     document.getElementById(id).addEventListener('input', function() {
       this.classList.remove('error');
     });
   });
 
-  // Enforce maxlength on all inputs dynamically
   Object.entries(FIELD_LIMITS).forEach(([id, cfg]) => {
     const el = document.getElementById(id);
     if (el && !el.getAttribute('maxlength')) {
