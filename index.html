@@ -4,6 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AVI International — Indian & Grocery Importers, Australia</title>
+
+  <!-- ── SECURITY HEADERS (meta fallbacks — primary headers set at server/Vercel level) ── -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self';
+             script-src 'self' 'unsafe-inline';
+             style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+             font-src https://fonts.gstatic.com;
+             img-src 'self' data:;
+             connect-src 'none';
+             frame-ancestors 'none';
+             base-uri 'self';
+             form-action 'self';" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-Frame-Options" content="DENY" />
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -45,7 +62,7 @@
       display: flex; align-items: center; gap: 12px; text-decoration: none;
     }
     .nav-logo-img {
-      height: 120px; width: auto;
+      height: 48px; width: auto;
       object-fit: contain;
       /* White background trimmed — logo has white bg so we blend it */
       border-radius: 6px;

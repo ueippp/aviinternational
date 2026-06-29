@@ -4,6 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wholesale Registration — AVI International</title>
+
+  <!-- ── SECURITY HEADERS ── -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self';
+             script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
+             style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+             font-src https://fonts.gstatic.com;
+             img-src 'self' data:;
+             connect-src https://api.emailjs.com;
+             frame-ancestors 'none';
+             base-uri 'self';
+             form-action 'self';" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-Frame-Options" content="DENY" />
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -273,7 +290,12 @@
       We couldn't send your registration right now. Please try again or email us directly at <a href="mailto:info@aviinternational.com.au">info@aviinternational.com.au</a>.
     </div>
 
-    <form id="wholesale-form" novalidate>
+    <form id="wholesale-form" novalidate autocomplete="on">
+
+      <!-- HONEYPOT — hidden from real users, bots fill this in → submission rejected -->
+      <div style="display:none;" aria-hidden="true">
+        <input type="text" name="website" id="honeypot" tabindex="-1" autocomplete="off" />
+      </div>
 
       <!-- BUSINESS INFO -->
       <div class="form-section">
@@ -392,36 +414,109 @@
 </div>
 
 <script>
-  // ────────────────────────────────────────────────────
-  //  EmailJS Configuration
-  //  INSTRUCTIONS:
-  //  1. Create a free account at https://www.emailjs.com
-  //  2. Add an Email Service (Gmail or SMTP)
-  //  3. Create TWO email templates (see comments below)
-  //  4. Replace the placeholder values below
-  // ────────────────────────────────────────────────────
-
-  const EMAILJS_PUBLIC_KEY  = 'YOUR_EMAILJS_PUBLIC_KEY';   // From EmailJS → Account → Public Key
-  const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';           // From EmailJS → Email Services
-  const EMAILJS_TEMPLATE_ADMIN = 'YOUR_TEMPLATE_ID_ADMIN'; // Template for info@aviinternational.com.au
-  const EMAILJS_TEMPLATE_USER  = 'YOUR_TEMPLATE_ID_USER';  // Template for the registering user
-
-  /*
-   ADMIN TEMPLATE (EMAILJS_TEMPLATE_ADMIN) should have:
-   - To email: info@aviinternational.com.au
-   - Subject: New Wholesale Registration — {{company_name}}
-   - Body variables: {{company_name}}, {{abn}}, {{contact_name}}, {{phone}}, {{email}},
-                     {{business_type}}, {{products_interest}}, {{street}}, {{suburb}},
-                     {{state}}, {{postcode}}, {{message}}, {{submission_date}}
-
-   USER TEMPLATE (EMAILJS_TEMPLATE_USER) should have:
-   - To email: {{email}}
-   - Subject: Your Wholesale Registration — AVI International
-   - Body: A welcome message confirming receipt, mentioning 1-2 business day follow-up.
-           Variables: {{contact_name}}, {{company_name}}, {{submission_date}}
-  */
+  // ── EmailJS config — replace these 4 values after setting up EmailJS ──
+  const EMAILJS_PUBLIC_KEY     = 'YOUR_EMAILJS_PUBLIC_KEY';
+  const EMAILJS_SERVICE_ID     = 'YOUR_SERVICE_ID';
+  const EMAILJS_TEMPLATE_ADMIN = 'YOUR_TEMPLATE_ID_ADMIN';
+  const EMAILJS_TEMPLATE_USER  = 'YOUR_TEMPLATE_ID_USER';
 
   emailjs.init(EMAILJS_PUBLIC_KEY);
+
+  // ── INPUT FIELD LIMITS ──
+  const FIELD_LIMITS = {
+    company_name:      { max: 150 },
+    abn:               { max: 14  },
+    contact_name:      { max: 100 },
+    phone:             { max: 20  },
+    email:             { max: 254 },
+    business_type:     { max: 60  },
+    products_interest: { max: 60  },
+    street:            { max: 200 },
+    suburb:            { max: 100 },
+    postcode:          { max: 4   },
+    message:           { max: 1000 }
+  };
+
+  // ── RATE LIMITING — max 3 submissions per 15 minutes (stored in memory only) ──
+  const RATE_LIMIT = { max: 3, windowMs: 15 * 60 * 1000 };
+  let submissions = [];
+
+  function isRateLimited() {
+    const now = Date.now();
+    submissions = submissions.filter(t => now - t < RATE_LIMIT.windowMs);
+    return submissions.length >= RATE_LIMIT.max;
+  }
+
+  // ── SANITISE — strip HTML tags and trim, enforce max length ──
+  function sanitise(str, maxLen) {
+    if (typeof str !== 'string') return '';
+    return str
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#x27;')
+      .replace(/\//g, '&#x2F;')
+      .trim()
+      .slice(0, maxLen || 500);
+  }
+
+  function val(id) {
+    const el = document.getElementById(id);
+    if (!el) return '';
+    const limit = FIELD_LIMITS[id] ? FIELD_LIMITS[id].max : 500;
+    return sanitise(el.value, limit);
+  }
+
+  // ── VALIDATION ──
+  function showError(fieldId, errId, show) {
+    const field = document.getElementById(fieldId);
+    const err   = document.getElementById(errId);
+    if (!field || !err) return;
+    if (show) { field.classList.add('error'); err.classList.add('visible'); }
+    else       { field.classList.remove('error'); err.classList.remove('visible'); }
+  }
+
+  function validateForm() {
+    let ok = true;
+
+    // Company name — letters, numbers, spaces, common punctuation only
+    const company = val('company_name');
+    if (!company || company.length < 2) { showError('company_name','err-company',true); ok=false; }
+    else { showError('company_name','err-company',false); }
+
+    // ABN — exactly 11 digits (spaces stripped)
+    const abn = document.getElementById('abn').value.replace(/\s/g,'');
+    if (!abn || !/^\d{11}$/.test(abn)) { showError('abn','err-abn',true); ok=false; }
+    else { showError('abn','err-abn',false); }
+
+    // Contact name
+    const cname = val('contact_name');
+    if (!cname || cname.length < 2) { showError('contact_name','err-contact',true); ok=false; }
+    else { showError('contact_name','err-contact',false); }
+
+    // Phone — digits, spaces, +, -, () only; min 8 digits
+    const rawPhone = document.getElementById('phone').value.trim();
+    const digitsOnly = rawPhone.replace(/[\s\-\+\(\)]/g,'');
+    if (!rawPhone || !/^[\d\s\+\-\(\)]{8,20}$/.test(rawPhone) || digitsOnly.length < 8) {
+      showError('phone','err-phone',true); ok=false;
+    } else { showError('phone','err-phone',false); }
+
+    // Email — RFC-compliant pattern, max 254 chars
+    const email = document.getElementById('email').value.trim();
+    const emailRe = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+    if (!email || !emailRe.test(email) || email.length > 254) {
+      showError('email','err-email',true); ok=false;
+    } else { showError('email','err-email',false); }
+
+    // Postcode — exactly 4 digits if provided
+    const pc = document.getElementById('postcode').value.trim();
+    if (pc && !/^\d{4}$/.test(pc)) {
+      // Just silently clean it — not mandatory
+      document.getElementById('postcode').value = pc.replace(/\D/g,'').slice(0,4);
+    }
+
+    return ok;
+  }
 
   const form     = document.getElementById('wholesale-form');
   const btn      = document.getElementById('submit-btn');
@@ -430,81 +525,67 @@
   const success  = document.getElementById('form-success');
   const errorBox = document.getElementById('form-error');
 
-  function val(id) { return document.getElementById(id).value.trim(); }
-
-  function showError(fieldId, errId, show) {
-    const field = document.getElementById(fieldId);
-    const err   = document.getElementById(errId);
-    if (show) { field.classList.add('error'); err.classList.add('visible'); }
-    else       { field.classList.remove('error'); err.classList.remove('visible'); }
-  }
-
-  function validateForm() {
-    let ok = true;
-
-    if (!val('company_name')) { showError('company_name','err-company',true); ok=false; }
-    else                       { showError('company_name','err-company',false); }
-
-    const abn = val('abn').replace(/\s/g,'');
-    if (!abn || !/^\d{11}$/.test(abn)) { showError('abn','err-abn',true); ok=false; }
-    else                                 { showError('abn','err-abn',false); }
-
-    if (!val('contact_name')) { showError('contact_name','err-contact',true); ok=false; }
-    else                       { showError('contact_name','err-contact',false); }
-
-    if (!val('phone')) { showError('phone','err-phone',true); ok=false; }
-    else               { showError('phone','err-phone',false); }
-
-    const email = val('email');
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('email','err-email',true); ok=false; }
-    else                                                        { showError('email','err-email',false); }
-
-    return ok;
-  }
-
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     success.style.display = 'none';
     errorBox.style.display = 'none';
 
+    // ── HONEYPOT CHECK — bots fill hidden field, humans don't ──
+    if (document.getElementById('honeypot').value !== '') {
+      // Silently reject — don't tell the bot it failed
+      success.style.display = 'block';
+      form.reset();
+      return;
+    }
+
+    // ── RATE LIMIT CHECK ──
+    if (isRateLimited()) {
+      errorBox.innerHTML = '⚠️ <strong>Too many submissions.</strong><br>Please wait 15 minutes before trying again, or email us at <a href="mailto:info@aviinternational.com.au">info@aviinternational.com.au</a>.';
+      errorBox.style.display = 'block';
+      return;
+    }
+
     if (!validateForm()) return;
 
-    // Show loading state
     btn.disabled = true;
     spinner.style.display = 'block';
     btnText.textContent = 'Sending…';
 
-    const now = new Date().toLocaleString('en-AU', { dateStyle: 'long', timeStyle: 'short', timeZone: 'Australia/Sydney' });
+    const now = new Date().toLocaleString('en-AU', {
+      dateStyle: 'long', timeStyle: 'short', timeZone: 'Australia/Sydney'
+    });
 
+    // All values sanitised before sending
     const params = {
       company_name:       val('company_name'),
-      abn:                val('abn'),
+      abn:                document.getElementById('abn').value.replace(/\s/g,''),
       contact_name:       val('contact_name'),
-      phone:              val('phone'),
-      email:              val('email'),
-      business_type:      val('business_type') || 'Not specified',
-      products_interest:  val('products_interest') || 'Not specified',
-      street:             val('street') || '—',
-      suburb:             val('suburb') || '—',
-      state:              val('state') || '—',
-      postcode:           val('postcode') || '—',
-      message:            val('message') || 'No additional information provided.',
+      phone:              sanitise(document.getElementById('phone').value.trim(), 20),
+      email:              document.getElementById('email').value.trim().slice(0, 254),
+      business_type:      val('business_type')      || 'Not specified',
+      products_interest:  val('products_interest')  || 'Not specified',
+      street:             val('street')             || '—',
+      suburb:             val('suburb')             || '—',
+      state:              val('state')              || '—',
+      postcode:           val('postcode')           || '—',
+      message:            val('message')            || 'No additional information provided.',
       submission_date:    now,
     };
 
     try {
-      // Send to admin
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ADMIN, params);
-      // Send to user
-      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_USER, params);
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_USER,  params);
 
-      // Success
+      submissions.push(Date.now()); // Record successful submission for rate limiting
+
       success.style.display = 'block';
       form.reset();
       form.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     } catch (err) {
-      console.error('EmailJS error:', err);
+      // Never log form data to console — only log a generic error code
+      console.error('Submission error:', err.status || 'unknown');
+      errorBox.innerHTML = '⚠️ <strong>Something went wrong.</strong><br>Please try again or email us directly at <a href="mailto:info@aviinternational.com.au">info@aviinternational.com.au</a>.';
       errorBox.style.display = 'block';
     } finally {
       btn.disabled = false;
@@ -513,11 +594,19 @@
     }
   });
 
-  // Clear errors on input
+  // Clear error state on input
   ['company_name','abn','contact_name','phone','email'].forEach(id => {
     document.getElementById(id).addEventListener('input', function() {
       this.classList.remove('error');
     });
+  });
+
+  // Enforce maxlength on all inputs dynamically
+  Object.entries(FIELD_LIMITS).forEach(([id, cfg]) => {
+    const el = document.getElementById(id);
+    if (el && !el.getAttribute('maxlength')) {
+      el.setAttribute('maxlength', cfg.max);
+    }
   });
 </script>
 
