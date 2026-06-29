@@ -52,23 +52,33 @@
       position: fixed; top: 37px; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 5vw;
-      height: 68px;
+      height: 108px;
       background: rgba(27,27,47,0.97);
       backdrop-filter: blur(8px);
       border-bottom: 1px solid rgba(232,148,58,0.12);
     }
 
     .nav-logo {
-      display: flex; align-items: center; gap: 12px; text-decoration: none;
+      display: flex; align-items: center; gap: 14px; text-decoration: none;
     }
     .nav-logo-img {
-      height: 48px; width: auto;
+      height: 100px; width: auto;
       object-fit: contain;
-      /* White background trimmed — logo has white bg so we blend it */
       border-radius: 6px;
-      mix-blend-mode: normal;
       background: var(--white);
-      padding: 3px 6px;
+      padding: 4px 8px;
+    }
+    .nav-logo-text {
+      display: flex; flex-direction: column;
+    }
+    .nav-logo-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; font-weight: 700;
+      color: var(--white); line-height: 1.2; letter-spacing: 0.01em;
+    }
+    .nav-logo-sub {
+      font-size: 0.65rem; font-weight: 400; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--saffron); margin-top: 3px;
     }
 
     nav ul { list-style: none; display: flex; gap: 32px; }
@@ -105,7 +115,7 @@
       background: linear-gradient(145deg, var(--navy) 0%, #2a1f4f 55%, #1a2f3a 100%);
       display: flex; align-items: center; justify-content: center;
       position: relative; overflow: hidden;
-      padding: 130px 5vw 60px;
+      padding: 150px 5vw 60px;
     }
 
     /* Mandala watermark */
@@ -118,7 +128,55 @@
       pointer-events: none;
     }
 
-    .hero-inner { max-width: 680px; position: relative; z-index: 2; }
+    .hero-inner { max-width: 780px; position: relative; z-index: 2; width: 100%; }
+
+    /* Company identity block */
+    .hero-identity {
+      display: flex; align-items: center; gap: 24px;
+      margin-bottom: 36px;
+    }
+    .hero-logo-img {
+      height: 110px; width: auto;
+      object-fit: contain;
+      border-radius: 10px;
+      background: var(--white);
+      padding: 6px 10px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      flex-shrink: 0;
+    }
+    .hero-company-name {
+      display: flex; flex-direction: column;
+    }
+    .hero-company-main {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 900; color: var(--white); line-height: 1.1;
+      letter-spacing: -0.01em;
+    }
+    .hero-company-sub {
+      font-size: clamp(0.85rem, 1.5vw, 1.05rem);
+      font-weight: 400; color: var(--saffron);
+      letter-spacing: 0.06em; margin-top: 6px;
+      text-transform: uppercase;
+    }
+
+    .hero-divider {
+      width: 60px; height: 3px;
+      background: linear-gradient(90deg, var(--saffron), transparent);
+      border-radius: 2px; margin-bottom: 28px;
+    }
+
+    /* Trust badges */
+    .hero-badges {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 36px;
+    }
+    .hero-badge {
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.85);
+      background: rgba(232,148,58,0.15);
+      border: 1px solid rgba(232,148,58,0.3);
+      padding: 6px 14px; border-radius: 20px;
+    }
 
     .hero-eyebrow {
       display: inline-block;
@@ -210,8 +268,43 @@
     .product-card:hover { border-color: var(--saffron); box-shadow: 0 8px 28px rgba(232,148,58,0.12); }
 
     .product-icon { font-size: 2.4rem; margin-bottom: 16px; }
-    .product-name { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; }
-    .product-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+    .product-name { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; }
+    .product-badge {
+      display: inline-block;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--saffron);
+      background: rgba(232,148,58,0.1); border: 1px solid rgba(232,148,58,0.25);
+      padding: 3px 10px; border-radius: 20px; margin-bottom: 12px;
+    }
+    .product-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.65; }
+
+    /* Product count banner */
+    .products-banner {
+      margin-top: 48px;
+      background: linear-gradient(135deg, var(--navy) 0%, #2a1f4f 100%);
+      border-radius: 12px; padding: 32px 40px;
+      border: 1px solid rgba(232,148,58,0.2);
+    }
+    .products-banner-inner {
+      display: flex; align-items: center; gap: 28px; flex-wrap: wrap;
+    }
+    .pb-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem; font-weight: 900; color: var(--saffron); flex-shrink: 0;
+    }
+    .pb-text {
+      flex: 1; color: rgba(255,255,255,0.75); font-size: 0.95rem; line-height: 1.6;
+      min-width: 200px;
+    }
+    .pb-cta {
+      display: inline-block;
+      background: var(--saffron); color: var(--navy);
+      font-weight: 700; font-size: 0.85rem;
+      padding: 12px 24px; border-radius: 7px; text-decoration: none;
+      white-space: nowrap; transition: background 0.2s;
+      flex-shrink: 0;
+    }
+    .pb-cta:hover { background: var(--red); color: var(--white); }
 
     /* ── BRANDS ── */
     #brands { background: var(--navy); }
@@ -342,6 +435,10 @@
 <nav>
   <a class="nav-logo" href="#top">
     <img src="logo.jpg" alt="AVI International Logo" class="nav-logo-img" />
+    <div class="nav-logo-text">
+      <span class="nav-logo-name">AVI International</span>
+      <span class="nav-logo-sub">Impex Pty Ltd · Premium Importers</span>
+    </div>
   </a>
   <ul>
     <li><a href="#products">Products</a></li>
@@ -355,12 +452,34 @@
 <!-- ── HERO ── -->
 <section class="hero" id="top">
   <div class="hero-inner">
+    <!-- Company Identity Block -->
+    <div class="hero-identity">
+      <div class="hero-logo-wrap">
+        <img src="logo.jpg" alt="AVI International" class="hero-logo-img" />
+      </div>
+      <div class="hero-company-name">
+        <span class="hero-company-main">AVI International</span>
+        <span class="hero-company-sub">(Impex) Pty Ltd</span>
+      </div>
+    </div>
+
+    <div class="hero-divider"></div>
+
     <span class="hero-eyebrow">🇦🇺 &nbsp; Proudly Supplying Australia</span>
     <h1>Your Trusted Source for <em>Indian & Cultural</em> Imports</h1>
     <p class="hero-desc">
-      AVI International brings premium prayer items, Indian groceries, and festival goods
-      to households and retailers across Australia — straight from the source, with care.
+      Bringing authentic prayer items, Indian groceries, and festival goods
+      to households and retailers across Australia — direct from source, with care.
     </p>
+
+    <!-- Trust badges -->
+    <div class="hero-badges">
+      <span class="hero-badge">✦ 500+ Products</span>
+      <span class="hero-badge">✦ 4 Home Brands</span>
+      <span class="hero-badge">✦ Australia-Wide</span>
+      <span class="hero-badge">✦ Wholesale Ready</span>
+    </div>
+
     <div class="hero-cta-row">
       <a href="wholesale.html" class="cta-card wholesale">
         <div class="cta-icon">🏪</div>
@@ -384,29 +503,41 @@
 <section id="products">
   <div class="reveal">
     <div class="section-label">What We Import</div>
-    <h2 class="section-title">Four Categories,<br>Sourced with Care</h2>
-    <p class="section-sub">From devotion to daily cooking, we supply everything your community needs, imported fresh and authentic.</p>
+    <h2 class="section-title">500+ Products Across<br>4 Core Categories</h2>
+    <p class="section-sub">From daily devotion to festive celebrations and everyday cooking — we import over 500 authentic products across four specialised categories, sourced directly from trusted suppliers in India.</p>
   </div>
   <div class="products-grid">
     <div class="product-card reveal">
       <div class="product-icon">🪔</div>
       <div class="product-name">Prayer Items</div>
-      <div class="product-desc">Incense, diyas, agarbatti, puja thalis, and all essentials for daily worship and devotional rituals.</div>
+      <div class="product-badge">150+ Products</div>
+      <div class="product-desc">Incense sticks, agarbatti, diyas, oil lamps, puja thalis, camphor, kumkum, chandan, flowers, garlands, bells, idols, aarti accessories, and all essentials for daily worship and devotional rituals.</div>
     </div>
     <div class="product-card reveal">
       <div class="product-icon">🌾</div>
       <div class="product-name">General Grocery</div>
-      <div class="product-desc">Everyday essentials including lentils, rice, spices, oils, and pantry staples from quality sources.</div>
+      <div class="product-badge">120+ Products</div>
+      <div class="product-desc">Everyday essentials including basmati rice, lentils (dal), cooking oils, ghee, sugar, salt, flour varieties, tea, snacks, papad, and pantry staples sourced from quality suppliers.</div>
     </div>
     <div class="product-card reveal">
       <div class="product-icon">🎉</div>
       <div class="product-name">Indian Festival Items</div>
-      <div class="product-desc">Seasonal and festival goods for Diwali, Holi, Navratri, Eid, and every celebration in between.</div>
+      <div class="product-badge">130+ Products</div>
+      <div class="product-desc">Seasonal and celebration goods for Diwali, Holi, Navratri, Dussehra, Ganesh Chaturthi, Eid, Raksha Bandhan, and every cultural occasion — decorations, sweets, mithai, and gifting essentials.</div>
     </div>
     <div class="product-card reveal">
       <div class="product-icon">🌶️</div>
       <div class="product-name">Indian Grocery</div>
-      <div class="product-desc">Authentic flours, pickles, chutneys, masalas, and specialty ingredients true to Indian cooking traditions.</div>
+      <div class="product-badge">100+ Products</div>
+      <div class="product-desc">Authentic atta, besan, sooji, pickles, chutneys, masalas, garam masala, turmeric, curry powders, tamarind, coconut milk, specialty ingredients and spice blends true to Indian cooking traditions.</div>
+    </div>
+  </div>
+  <!-- Product count banner -->
+  <div class="products-banner reveal">
+    <div class="products-banner-inner">
+      <span class="pb-num">500+</span>
+      <span class="pb-text">Authentic products imported directly from India — available for wholesale and retail across Australia</span>
+      <a href="wholesale.html" class="pb-cta">Enquire as Wholesaler →</a>
     </div>
   </div>
 </section>
@@ -453,8 +584,8 @@
       </p>
       <div class="about-stats">
         <div class="stat-box">
-          <div class="stat-num">4+</div>
-          <div class="stat-desc">Product Categories</div>
+          <div class="stat-num">500+</div>
+          <div class="stat-desc">Products Imported</div>
         </div>
         <div class="stat-box">
           <div class="stat-num">4</div>

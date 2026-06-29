@@ -65,18 +65,21 @@
     /* ── NAV ── */
     nav {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 5vw; height: 68px;
+      padding: 0 5vw; height: 108px;
       background: rgba(27,27,47,0.97);
       border-bottom: 1px solid rgba(232,148,58,0.12);
     }
-    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
     .nav-logo-img {
-      height: 48px; width: auto;
+      height: 100px; width: auto;
       object-fit: contain;
       border-radius: 6px;
       background: var(--white);
-      padding: 3px 6px;
+      padding: 4px 8px;
     }
+    .nav-logo-text { display: flex; flex-direction: column; }
+    .nav-logo-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--white); line-height: 1.2; }
+    .nav-logo-sub { font-size: 0.62rem; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--saffron); margin-top: 3px; }
     .nav-back { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
     .nav-back:hover { color: var(--saffron); }
 
@@ -84,7 +87,7 @@
     .page-wrapper {
       display: grid;
       grid-template-columns: 1fr 1.6fr;
-      min-height: calc(100vh - 105px);
+      min-height: calc(100vh - 145px);
     }
 
     /* ── LEFT PANEL ── */
@@ -232,6 +235,10 @@
 <nav>
   <a class="nav-logo" href="index.html">
     <img src="logo.jpg" alt="AVI International Logo" class="nav-logo-img" />
+    <div class="nav-logo-text">
+      <span class="nav-logo-name">AVI International</span>
+      <span class="nav-logo-sub">Impex Pty Ltd · Premium Importers</span>
+    </div>
   </a>
   <a href="index.html" class="nav-back">← Back to Home</a>
 </nav>
