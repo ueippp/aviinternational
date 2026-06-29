@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wholesale Registration — AVI International</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <!-- EmailJS SDK -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:   #1B1B2F;
+      --saffron:#E8943A;
+      --green:  #2D6A4F;
+      --cream:  #FDF6EC;
+      --red:    #C62A2A;
+      --light:  #F5EFE6;
+      --muted:  #6B6B7B;
+      --white:  #FFFFFF;
+      --error:  #C62A2A;
+      --success:#2D6A4F;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--navy);
+      min-height: 100vh;
+    }
+
+    /* ── TOP CONTACT BAR ── */
+    .top-bar {
+      background: var(--navy);
+      border-bottom: 1px solid rgba(232,148,58,0.2);
+      padding: 8px 5vw;
+      display: flex; align-items: center; justify-content: flex-end;
+      gap: 24px; flex-wrap: wrap;
+    }
+    .top-bar-item {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 0.75rem; color: rgba(255,255,255,0.7);
+      text-decoration: none; transition: color 0.2s; white-space: nowrap;
+    }
+    .top-bar-item:hover { color: var(--saffron); }
+
+    /* ── NAV ── */
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5vw; height: 68px;
+      background: rgba(27,27,47,0.97);
+      border-bottom: 1px solid rgba(232,148,58,0.12);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .nav-logo-mark {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--saffron), var(--red));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 900; color: var(--white);
+    }
+    .nav-logo-text { font-family: 'Playfair Display', serif; color: var(--white); font-size: 1.05rem; font-weight: 600; line-height: 1.2; }
+    .nav-logo-text span { display: block; font-family: 'Inter', sans-serif; font-size: 0.65rem; font-weight: 300; letter-spacing: 0.12em; color: var(--saffron); text-transform: uppercase; }
+    .nav-back { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+    .nav-back:hover { color: var(--saffron); }
+
+    /* ── PAGE LAYOUT ── */
+    .page-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      min-height: calc(100vh - 105px);
+    }
+
+    /* ── LEFT PANEL ── */
+    .left-panel {
+      background: linear-gradient(160deg, var(--navy) 0%, #2a1f4f 100%);
+      padding: 60px 48px;
+      display: flex; flex-direction: column; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .left-panel::after {
+      content: '';
+      position: absolute; bottom: -60px; right: -60px;
+      width: 320px; height: 320px;
+      border: 1px solid rgba(232,148,58,0.15); border-radius: 50%;
+      pointer-events: none;
+    }
+    .left-panel::before {
+      content: '';
+      position: absolute; top: -40px; left: -40px;
+      width: 200px; height: 200px;
+      border: 1px solid rgba(232,148,58,0.1); border-radius: 50%;
+      pointer-events: none;
+    }
+    .left-eyebrow {
+      display: inline-block;
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--saffron);
+      border: 1px solid rgba(232,148,58,0.3);
+      padding: 5px 12px; border-radius: 20px; margin-bottom: 28px;
+      width: fit-content;
+    }
+    .left-panel h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 2.5vw, 2.6rem);
+      font-weight: 900; color: var(--white); line-height: 1.2; margin-bottom: 20px;
+    }
+    .left-panel h1 em { font-style: normal; color: var(--saffron); }
+    .left-panel p { color: rgba(255,255,255,0.65); font-size: 0.92rem; line-height: 1.75; margin-bottom: 40px; }
+
+    .info-list { display: flex; flex-direction: column; gap: 16px; }
+    .info-item { display: flex; align-items: flex-start; gap: 14px; }
+    .info-icon {
+      width: 36px; height: 36px; border-radius: 8px; flex-shrink: 0;
+      background: rgba(232,148,58,0.15);
+      display: flex; align-items: center; justify-content: center; font-size: 1rem;
+    }
+    .info-text strong { display: block; font-size: 0.88rem; color: var(--white); font-weight: 600; margin-bottom: 2px; }
+    .info-text span { font-size: 0.8rem; color: rgba(255,255,255,0.5); }
+
+    /* ── FORM PANEL ── */
+    .form-panel { padding: 56px 56px; display: flex; flex-direction: column; justify-content: center; }
+
+    .form-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; font-weight: 700; margin-bottom: 6px;
+    }
+    .form-sub { color: var(--muted); font-size: 0.88rem; margin-bottom: 40px; }
+    .form-sub a { color: var(--saffron); text-decoration: none; }
+
+    /* ── FORM STYLES ── */
+    .form-section { margin-bottom: 32px; }
+    .form-section-label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--muted);
+      padding-bottom: 10px; margin-bottom: 18px;
+      border-bottom: 1.5px solid rgba(27,27,47,0.1);
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { margin-bottom: 18px; }
+    .form-group.full { grid-column: 1 / -1; }
+
+    label {
+      display: block; font-size: 0.8rem; font-weight: 600;
+      margin-bottom: 7px; color: var(--navy);
+    }
+    label .req { color: var(--red); margin-left: 3px; }
+
+    input, textarea, select {
+      width: 100%; padding: 11px 14px;
+      border: 1.5px solid rgba(27,27,47,0.15); border-radius: 7px;
+      font-family: 'Inter', sans-serif; font-size: 0.88rem;
+      background: var(--white); color: var(--navy);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--saffron);
+      box-shadow: 0 0 0 3px rgba(232,148,58,0.12);
+    }
+    input.error, textarea.error { border-color: var(--error); }
+    textarea { resize: vertical; min-height: 90px; }
+
+    .field-error { font-size: 0.75rem; color: var(--error); margin-top: 5px; display: none; }
+    .field-error.visible { display: block; }
+
+    /* ── SUBMIT ── */
+    .submit-btn {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; padding: 15px;
+      background: linear-gradient(135deg, var(--saffron), #d4742a);
+      color: var(--navy); font-family: 'Inter', sans-serif;
+      font-size: 0.95rem; font-weight: 700;
+      border: none; border-radius: 8px; cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+      margin-top: 8px;
+    }
+    .submit-btn:hover:not(:disabled) { opacity: 0.9; transform: translateY(-1px); }
+    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    /* ── SUCCESS / ERROR STATES ── */
+    .form-feedback {
+      display: none; padding: 20px 24px; border-radius: 8px;
+      margin-bottom: 28px; font-size: 0.88rem; line-height: 1.6;
+    }
+    .form-feedback.success {
+      display: block;
+      background: #e8f5ee; border: 1.5px solid #a3d9b8; color: #1a5c36;
+    }
+    .form-feedback.error-msg {
+      display: block;
+      background: #fdecea; border: 1.5px solid #f5a8a0; color: #8b1a14;
+    }
+
+    /* ── SPINNER ── */
+    .spinner {
+      display: none; width: 18px; height: 18px;
+      border: 2px solid rgba(27,27,47,0.3);
+      border-top-color: var(--navy);
+      border-radius: 50%; animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .page-wrapper { grid-template-columns: 1fr; }
+      .left-panel { padding: 40px 24px; }
+      .form-panel { padding: 40px 24px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <div class="nav-logo-mark">A</div>
+    <div class="nav-logo-text">AVI International
+      <span>Premium Importers · Australia</span>
+    </div>
+  </a>
+  <a href="index.html" class="nav-back">← Back to Home</a>
+</nav>
+
+<div class="page-wrapper">
+
+  <!-- LEFT PANEL -->
+  <div class="left-panel">
+    <span class="left-eyebrow">🏪 &nbsp; Trade Partner Registration</span>
+    <h1>Join Our <em>Wholesale</em> Network</h1>
+    <p>Register your business to access wholesale pricing, place bulk enquiries, and become a valued AVI International trade partner across Australia.</p>
+
+    <div class="info-list">
+      <div class="info-item">
+        <div class="info-icon">📋</div>
+        <div class="info-text">
+          <strong>Quick Registration</strong>
+          <span>Fill the form and we'll review your application within 1–2 business days.</span>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">📧</div>
+        <div class="info-text">
+          <strong>Confirmation Email</strong>
+          <span>You'll receive an email confirmation immediately after submitting.</span>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">📞</div>
+        <div class="info-text">
+          <strong>Personal Follow-Up</strong>
+          <span>Our team will contact you to discuss your requirements and next steps.</span>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">💼</div>
+        <div class="info-text">
+          <strong>ABN Required</strong>
+          <span>All wholesale accounts require a valid Australian Business Number (ABN).</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORM PANEL -->
+  <div class="form-panel">
+    <div class="form-title">Business Registration</div>
+    <div class="form-sub">Already registered? <a href="mailto:info@aviinternational.com.au">Contact us →</a></div>
+
+    <div id="form-success" class="form-feedback success" style="display:none;">
+      ✅ <strong>Registration submitted successfully!</strong><br>
+      Thank you for registering with AVI International. A confirmation email has been sent to your address. Our team will review your application and follow up within 1–2 business days. We look forward to partnering with you!
+    </div>
+    <div id="form-error" class="form-feedback error-msg" style="display:none;">
+      ⚠️ <strong>Something went wrong.</strong><br>
+      We couldn't send your registration right now. Please try again or email us directly at <a href="mailto:info@aviinternational.com.au">info@aviinternational.com.au</a>.
+    </div>
+
+    <form id="wholesale-form" novalidate>
+
+      <!-- BUSINESS INFO -->
+      <div class="form-section">
+        <div class="form-section-label">Business Information</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="company_name">Company Name <span class="req">*</span></label>
+            <input type="text" id="company_name" name="company_name" placeholder="e.g. Singh Grocers Pty Ltd" required />
+            <div class="field-error" id="err-company">Company name is required.</div>
+          </div>
+          <div class="form-group">
+            <label for="abn">ABN (Australian Business Number) <span class="req">*</span></label>
+            <input type="text" id="abn" name="abn" placeholder="e.g. 12 345 678 901" required maxlength="14" />
+            <div class="field-error" id="err-abn">Valid ABN is required (11 digits).</div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="business_type">Business Type</label>
+            <select id="business_type" name="business_type">
+              <option value="">— Select —</option>
+              <option>Grocery / Supermarket</option>
+              <option>Indian / Asian Grocery Store</option>
+              <option>Convenience Store</option>
+              <option>Restaurant / Café</option>
+              <option>Temple / Religious Organisation</option>
+              <option>Online Retailer</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="products_interest">Products of Interest</label>
+            <select id="products_interest" name="products_interest">
+              <option value="">— Select primary interest —</option>
+              <option>Prayer Items</option>
+              <option>Indian Grocery</option>
+              <option>General Grocery</option>
+              <option>Indian Festival Items</option>
+              <option>All Categories</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTACT PERSON -->
+      <div class="form-section">
+        <div class="form-section-label">Contact Person</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="contact_name">Full Name <span class="req">*</span></label>
+            <input type="text" id="contact_name" name="contact_name" placeholder="Your full name" required />
+            <div class="field-error" id="err-contact">Contact name is required.</div>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number <span class="req">*</span></label>
+            <input type="tel" id="phone" name="phone" placeholder="e.g. 04XX XXX XXX" required />
+            <div class="field-error" id="err-phone">Phone number is required.</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address <span class="req">*</span></label>
+          <input type="email" id="email" name="email" placeholder="business@example.com.au" required />
+          <div class="field-error" id="err-email">A valid email address is required.</div>
+        </div>
+      </div>
+
+      <!-- ADDRESS -->
+      <div class="form-section">
+        <div class="form-section-label">Business Address</div>
+        <div class="form-group">
+          <label for="street">Street Address</label>
+          <input type="text" id="street" name="street" placeholder="Street address" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="suburb">Suburb</label>
+            <input type="text" id="suburb" name="suburb" placeholder="Suburb" />
+          </div>
+          <div class="form-group">
+            <label for="state">State</label>
+            <select id="state" name="state">
+              <option value="">— State —</option>
+              <option>NSW</option><option>VIC</option><option>QLD</option>
+              <option>WA</option><option>SA</option><option>TAS</option>
+              <option>ACT</option><option>NT</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="postcode">Postcode</label>
+            <input type="text" id="postcode" name="postcode" placeholder="e.g. 2000" maxlength="4" />
+          </div>
+          <div class="form-group">
+            <label for="country">Country</label>
+            <input type="text" id="country" name="country" value="Australia" readonly style="background:#f0f0f0;" />
+          </div>
+        </div>
+      </div>
+
+      <!-- ADDITIONAL INFO -->
+      <div class="form-section">
+        <div class="form-section-label">Additional Information</div>
+        <div class="form-group">
+          <label for="message">Tell us about your business or any specific enquiries</label>
+          <textarea id="message" name="message" placeholder="e.g. We run a grocery store in Parramatta and are looking for wholesale prayer items and Indian grocery stock..."></textarea>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submit-btn">
+        <div class="spinner" id="spinner"></div>
+        <span id="btn-text">Submit Registration</span>
+      </button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // ────────────────────────────────────────────────────
+  //  EmailJS Configuration
+  //  INSTRUCTIONS:
+  //  1. Create a free account at https://www.emailjs.com
+  //  2. Add an Email Service (Gmail or SMTP)
+  //  3. Create TWO email templates (see comments below)
+  //  4. Replace the placeholder values below
+  // ────────────────────────────────────────────────────
+
+  const EMAILJS_PUBLIC_KEY  = 'YOUR_EMAILJS_PUBLIC_KEY';   // From EmailJS → Account → Public Key
+  const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';           // From EmailJS → Email Services
+  const EMAILJS_TEMPLATE_ADMIN = 'YOUR_TEMPLATE_ID_ADMIN'; // Template for info@aviinternational.com.au
+  const EMAILJS_TEMPLATE_USER  = 'YOUR_TEMPLATE_ID_USER';  // Template for the registering user
+
+  /*
+   ADMIN TEMPLATE (EMAILJS_TEMPLATE_ADMIN) should have:
+   - To email: info@aviinternational.com.au
+   - Subject: New Wholesale Registration — {{company_name}}
+   - Body variables: {{company_name}}, {{abn}}, {{contact_name}}, {{phone}}, {{email}},
+                     {{business_type}}, {{products_interest}}, {{street}}, {{suburb}},
+                     {{state}}, {{postcode}}, {{message}}, {{submission_date}}
+
+   USER TEMPLATE (EMAILJS_TEMPLATE_USER) should have:
+   - To email: {{email}}
+   - Subject: Your Wholesale Registration — AVI International
+   - Body: A welcome message confirming receipt, mentioning 1-2 business day follow-up.
+           Variables: {{contact_name}}, {{company_name}}, {{submission_date}}
+  */
+
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+
+  const form     = document.getElementById('wholesale-form');
+  const btn      = document.getElementById('submit-btn');
+  const btnText  = document.getElementById('btn-text');
+  const spinner  = document.getElementById('spinner');
+  const success  = document.getElementById('form-success');
+  const errorBox = document.getElementById('form-error');
+
+  function val(id) { return document.getElementById(id).value.trim(); }
+
+  function showError(fieldId, errId, show) {
+    const field = document.getElementById(fieldId);
+    const err   = document.getElementById(errId);
+    if (show) { field.classList.add('error'); err.classList.add('visible'); }
+    else       { field.classList.remove('error'); err.classList.remove('visible'); }
+  }
+
+  function validateForm() {
+    let ok = true;
+
+    if (!val('company_name')) { showError('company_name','err-company',true); ok=false; }
+    else                       { showError('company_name','err-company',false); }
+
+    const abn = val('abn').replace(/\s/g,'');
+    if (!abn || !/^\d{11}$/.test(abn)) { showError('abn','err-abn',true); ok=false; }
+    else                                 { showError('abn','err-abn',false); }
+
+    if (!val('contact_name')) { showError('contact_name','err-contact',true); ok=false; }
+    else                       { showError('contact_name','err-contact',false); }
+
+    if (!val('phone')) { showError('phone','err-phone',true); ok=false; }
+    else               { showError('phone','err-phone',false); }
+
+    const email = val('email');
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('email','err-email',true); ok=false; }
+    else                                                        { showError('email','err-email',false); }
+
+    return ok;
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    success.style.display = 'none';
+    errorBox.style.display = 'none';
+
+    if (!validateForm()) return;
+
+    // Show loading state
+    btn.disabled = true;
+    spinner.style.display = 'block';
+    btnText.textContent = 'Sending…';
+
+    const now = new Date().toLocaleString('en-AU', { dateStyle: 'long', timeStyle: 'short', timeZone: 'Australia/Sydney' });
+
+    const params = {
+      company_name:       val('company_name'),
+      abn:                val('abn'),
+      contact_name:       val('contact_name'),
+      phone:              val('phone'),
+      email:              val('email'),
+      business_type:      val('business_type') || 'Not specified',
+      products_interest:  val('products_interest') || 'Not specified',
+      street:             val('street') || '—',
+      suburb:             val('suburb') || '—',
+      state:              val('state') || '—',
+      postcode:           val('postcode') || '—',
+      message:            val('message') || 'No additional information provided.',
+      submission_date:    now,
+    };
+
+    try {
+      // Send to admin
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ADMIN, params);
+      // Send to user
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_USER, params);
+
+      // Success
+      success.style.display = 'block';
+      form.reset();
+      form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    } catch (err) {
+      console.error('EmailJS error:', err);
+      errorBox.style.display = 'block';
+    } finally {
+      btn.disabled = false;
+      spinner.style.display = 'none';
+      btnText.textContent = 'Submit Registration';
+    }
+  });
+
+  // Clear errors on input
+  ['company_name','abn','contact_name','phone','email'].forEach(id => {
+    document.getElementById(id).addEventListener('input', function() {
+      this.classList.remove('error');
+    });
+  });
+</script>
+
+</body>
+</html>
