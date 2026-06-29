@@ -53,14 +53,13 @@
       border-bottom: 1px solid rgba(232,148,58,0.12);
     }
     .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-    .nav-logo-mark {
-      width: 40px; height: 40px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--saffron), var(--red));
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 900; color: var(--white);
+    .nav-logo-img {
+      height: 48px; width: auto;
+      object-fit: contain;
+      border-radius: 6px;
+      background: var(--white);
+      padding: 3px 6px;
     }
-    .nav-logo-text { font-family: 'Playfair Display', serif; color: var(--white); font-size: 1.05rem; font-weight: 600; line-height: 1.2; }
-    .nav-logo-text span { display: block; font-family: 'Inter', sans-serif; font-size: 0.65rem; font-weight: 300; letter-spacing: 0.12em; color: var(--saffron); text-transform: uppercase; }
     .nav-back { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
     .nav-back:hover { color: var(--saffron); }
 
@@ -215,10 +214,7 @@
 
 <nav>
   <a class="nav-logo" href="index.html">
-    <div class="nav-logo-mark">A</div>
-    <div class="nav-logo-text">AVI International
-      <span>Premium Importers · Australia</span>
-    </div>
+    <img src="logo.jpg" alt="AVI International Logo" class="nav-logo-img" />
   </a>
   <a href="index.html" class="nav-back">← Back to Home</a>
 </nav>

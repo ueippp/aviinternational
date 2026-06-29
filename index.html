@@ -44,19 +44,15 @@
     .nav-logo {
       display: flex; align-items: center; gap: 12px; text-decoration: none;
     }
-    .nav-logo-mark {
-      width: 40px; height: 40px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--saffron), var(--red));
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Playfair Display', serif;
-      font-size: 18px; font-weight: 900; color: var(--white);
+    .nav-logo-img {
+      height: 48px; width: auto;
+      object-fit: contain;
+      /* White background trimmed — logo has white bg so we blend it */
+      border-radius: 6px;
+      mix-blend-mode: normal;
+      background: var(--white);
+      padding: 3px 6px;
     }
-    .nav-logo-text {
-      font-family: 'Playfair Display', serif;
-      color: var(--white); font-size: 1.1rem; font-weight: 600;
-      line-height: 1.2;
-    }
-    .nav-logo-text span { display: block; font-family: 'Inter', sans-serif; font-size: 0.65rem; font-weight: 300; letter-spacing: 0.12em; color: var(--saffron); text-transform: uppercase; }
 
     nav ul { list-style: none; display: flex; gap: 32px; }
     nav ul a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.88rem; font-weight: 500; letter-spacing: 0.03em; transition: color 0.2s; }
@@ -328,10 +324,7 @@
 <!-- ── NAV ── -->
 <nav>
   <a class="nav-logo" href="#top">
-    <div class="nav-logo-mark">A</div>
-    <div class="nav-logo-text">AVI International
-      <span>Premium Importers · Australia</span>
-    </div>
+    <img src="logo.jpg" alt="AVI International Logo" class="nav-logo-img" />
   </a>
   <ul>
     <li><a href="#products">Products</a></li>
@@ -359,7 +352,7 @@
         <div class="cta-desc">Register your business to place bulk enquiries and access wholesale pricing.</div>
         <span class="cta-btn">Register Now →</span>
       </a>
-      <a href="https://Onlineindiangrocerystore.com.au" target="_blank" class="cta-card retail">
+      <a href="https://YOUR-SHOPIFY-STORE.myshopify.com" target="_blank" class="cta-card retail">
         <div class="cta-icon">🛍️</div>
         <div class="cta-label">Shop Online</div>
         <div class="cta-title">Retail Customers</div>
