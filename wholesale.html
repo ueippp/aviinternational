@@ -31,22 +31,25 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* ── TRADITIONAL / TEMPLE INSPIRED PALETTE ── */
+    /* ── LIGHT INDIAN FLAG PALETTE ── */
     :root {
-      --saffron:    #E2761B;    /* deep temple saffron */
-      --saffron-2:  #F49B3F;    /* warm saffron highlight */
-      --terracotta: #B5391A;    /* sun-baked terracotta */
-      --maroon:     #5A0F1A;    /* sindoor maroon */
-      --maroon-2:   #3A0A12;    /* deeper maroon for grounding */
-      --gold:       #C9A227;    /* temple gold */
-      --gold-soft:  #E8C766;    /* soft gilt */
-      --cream:      #FBF3DC;    /* parchment */
-      --cream-2:    #F4E6C3;    /* warm parchment */
-      --ink:        #2A0F0A;    /* warm dark for text */
-      --muted:      #7A5C4F;    /* warm muted */
+      --saffron:    #E8821A;
+      --saffron-2:  #F5A54A;
+      --saffron-bg: #FFF4E8;
+      --green:      #138808;
+      --green-2:    #1FAD0A;
+      --green-bg:   #EEF7EC;
       --white:      #FFFFFF;
-      --error:      #B5391A;    /* terracotta red for input issues */
-      --success:    #4F6B3A;    /* tulsi green for success */
+      --cream:      #FDFAF4;
+      --cream-2:    #F7F0E3;
+      --gold:       #C9A227;
+      --gold-soft:  #E8C766;
+      --ink:        #1A1A1A;
+      --ink-2:      #3D2B1A;
+      --muted:      #6B5A4A;
+      --border:     rgba(232,130,26,0.18);
+      --error:      #CC2200;
+      --success:    #138808;
     }
 
     html { scroll-behavior: smooth; }
@@ -61,8 +64,8 @@
 
     /* ── TOP CONTACT BAR ── */
     .top-bar {
-      background: var(--maroon-2);
-      border-bottom: 2px solid var(--gold);
+      background: var(--saffron);
+      border-bottom: 2px solid var(--green);
       padding: 8px 5vw;
       display: flex; align-items: center; justify-content: space-between;
       gap: 18px; flex-wrap: wrap;
@@ -70,7 +73,7 @@
     }
     .top-bar-greet {
       font-family: 'Marcellus', serif;
-      font-size: 0.85rem; color: var(--gold-soft);
+      font-size: 0.85rem; color: var(--white);
       letter-spacing: 0.04em; font-weight: 600;
     }
     .top-bar-right {
@@ -78,11 +81,11 @@
     }
     .top-bar-item {
       display: flex; align-items: center; gap: 7px;
-      font-size: 0.75rem; color: rgba(255,255,255,0.78);
+      font-size: 0.75rem; color: rgba(255,255,255,0.92);
       text-decoration: none; transition: color 0.2s;
       white-space: nowrap;
     }
-    .top-bar-item:hover { color: var(--saffron-2); }
+    .top-bar-item:hover { color: var(--white); text-decoration: underline; }
     .top-bar-item .tbi { font-size: 0.85rem; }
 
     /* ── NAV ── */
@@ -91,9 +94,9 @@
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 5vw;
       height: 96px;
-      background: linear-gradient(180deg, rgba(58,10,18,0.98) 0%, rgba(90,15,26,0.96) 100%);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid rgba(201,162,39,0.35);
+      background: var(--white);
+      border-bottom: 3px solid var(--green);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
     }
 
     .nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
@@ -101,24 +104,24 @@
       height: 78px; width: auto;
       object-fit: contain; border-radius: 6px;
       background: var(--cream); padding: 4px 8px;
-      border: 1px solid var(--gold-soft);
+      border: 1px solid var(--border);
     }
     .nav-logo-text { display: flex; flex-direction: column; }
     .nav-logo-name {
       font-family: 'Marcellus', serif;
       font-size: 1.2rem; font-weight: 700;
-      color: var(--cream); line-height: 1.15; letter-spacing: 0.02em;
+      color: var(--ink-2); line-height: 1.15; letter-spacing: 0.02em;
     }
     .nav-logo-sub {
       font-size: 0.75rem; font-weight: 500; letter-spacing: 0.05em;
-      color: var(--gold-soft); margin-top: 4px;
+      color: var(--saffron); margin-top: 4px;
     }
     .nav-back {
-      color: rgba(251,243,220,0.85); text-decoration: none;
+      color: var(--ink-2); text-decoration: none;
       font-size: 0.9rem; font-weight: 500; letter-spacing: 0.03em;
       transition: color 0.2s;
     }
-    .nav-back:hover { color: var(--gold-soft); }
+    .nav-back:hover { color: var(--saffron); }
 
     /* Decorative divider with diamond */
     .ornament {
@@ -135,9 +138,9 @@
       max-width: 1300px;
       margin: 40px auto 80px auto;
       background: var(--cream-2);
-      border: 1px solid rgba(201,162,39,0.3);
+      border: 1px solid var(--border);
       border-radius: 4px;
-      box-shadow: 0 12px 40px rgba(42,15,10,0.08);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.08);
       overflow: hidden;
       width: 90vw;
     }
@@ -145,37 +148,38 @@
     /* ── LEFT UTILITY OVERVIEW PANEL ── */
     .left-panel {
       padding: 60px 45px;
-      background: linear-gradient(160deg, var(--maroon-2) 0%, var(--maroon) 100%);
-      color: var(--cream);
-      border-right: 1px solid var(--gold);
+      background: linear-gradient(160deg, var(--saffron-bg) 0%, var(--green-bg) 100%);
+      color: var(--ink-2);
+      border-right: 2px solid var(--saffron);
     }
     .left-eyebrow {
       display: inline-block;
       font-size: 0.72rem; font-weight: 600; letter-spacing: 0.18em;
-      text-transform: uppercase; color: var(--gold-soft);
-      border: 1px solid rgba(201,162,39,0.5);
+      text-transform: uppercase; color: var(--green);
+      border: 1px solid rgba(19,136,8,0.3);
+      background: var(--white);
       padding: 6px 14px; border-radius: 2px; margin-bottom: 24px;
     }
     .left-panel h1 {
       font-family: 'Marcellus', serif;
       font-size: 2.4rem; font-weight: 400; line-height: 1.2;
-      color: var(--cream); margin-bottom: 18px;
+      color: var(--ink-2); margin-bottom: 18px;
     }
-    .left-panel h1 em { font-style: normal; color: var(--gold-soft); }
-    .left-panel p { color: rgba(251,243,220,0.78); font-size: 0.95rem; line-height: 1.7; margin-bottom: 40px; }
+    .left-panel h1 em { font-style: normal; color: var(--saffron); }
+    .left-panel p { color: var(--muted); font-size: 0.95rem; line-height: 1.7; margin-bottom: 40px; }
 
     .info-list { display: flex; flex-direction: column; gap: 24px; }
-    .info-item { display: flex; align-items: flex-start; gap: 14px; padding-bottom: 16px; border-bottom: 1px dashed rgba(201,162,39,0.2); }
+    .info-item { display: flex; align-items: flex-start; gap: 14px; padding-bottom: 16px; border-bottom: 1px dashed rgba(19,136,8,0.2); }
     .info-item:last-child { border-bottom: none; }
     .info-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 2px; }
-    .info-text strong { display: block; font-size: 0.95rem; color: var(--gold-soft); font-weight: 500; margin-bottom: 3px; font-family: 'Marcellus', serif; }
-    .info-text span { font-size: 0.88rem; color: rgba(251,243,220,0.7); line-height: 1.5; }
+    .info-text strong { display: block; font-size: 0.95rem; color: var(--saffron); font-weight: 600; margin-bottom: 3px; font-family: 'Marcellus', serif; }
+    .info-text span { font-size: 0.88rem; color: var(--muted); line-height: 1.5; }
 
     /* ── RIGHT MAIN REGISTRATION FORM ── */
     .form-panel { padding: 60px 50px; background: var(--white); }
-    .form-title { font-family: 'Marcellus', serif; font-size: 1.8rem; color: var(--maroon-2); margin-bottom: 4px; }
+    .form-title { font-family: 'Marcellus', serif; font-size: 1.8rem; color: var(--ink-2); margin-bottom: 4px; }
     .form-sub { color: var(--muted); font-size: 0.88rem; margin-bottom: 40px; }
-    .form-sub a { color: var(--terracotta); text-decoration: none; font-weight: 600; }
+    .form-sub a { color: var(--saffron); text-decoration: none; font-weight: 600; }
     .form-sub a:hover { text-decoration: underline; }
 
     /* ── ACCORDION BLOCKS ── */
@@ -183,9 +187,9 @@
     .form-section-label {
       font-family: 'Marcellus', serif;
       font-size: 0.85rem; font-weight: 600; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--terracotta);
+      text-transform: uppercase; color: var(--saffron);
       padding-bottom: 8px; margin-bottom: 24px;
-      border-bottom: 1px solid rgba(201,162,39,0.3);
+      border-bottom: 2px solid var(--border);
     }
 
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -197,17 +201,17 @@
 
     input, textarea, select {
       width: 100%; padding: 11px 14px;
-      border: 1px solid rgba(90,15,26,0.15); border-radius: 3px;
+      border: 1px solid var(--border); border-radius: 3px;
       font-family: 'Inter', sans-serif; font-size: 0.88rem;
       background: var(--cream); color: var(--ink);
       transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
       outline: none;
     }
-    input::placeholder, textarea::placeholder { color: #9E8579; opacity: 0.7; }
+    input::placeholder, textarea::placeholder { color: #9E8E7E; opacity: 0.7; }
     
     input:focus, textarea:focus, select:focus {
       border-color: var(--saffron);
-      box-shadow: 0 0 0 3px rgba(226,118,27,0.15);
+      box-shadow: 0 0 0 3px rgba(232,130,26,0.12);
       background-color: var(--white);
     }
     input.error, textarea.error, select.error { border-color: var(--error); background-color: #FFF2F0; }
@@ -220,7 +224,7 @@
     .multi-check-group {
       display: flex; flex-direction: column; gap: 8px;
       padding: 10px 14px;
-      border: 1px solid rgba(90,15,26,0.15); border-radius: 3px;
+      border: 1px solid var(--border); border-radius: 3px;
       background: var(--cream);
     }
     .check-option {
@@ -229,12 +233,11 @@
       cursor: pointer; padding: 4px 2px;
       transition: color 0.15s;
     }
-    .check-option:hover { color: var(--saffron); }
+    .check-option:hover { color: var(--green); }
     .check-option input[type="checkbox"] {
       width: 16px; height: 16px; flex-shrink: 0;
-      accent-color: var(--saffron);
+      accent-color: var(--green);
       cursor: pointer;
-      /* Reset to normal checkbox size, not full-width */
       padding: 0; border: none; background: none;
       box-shadow: none;
     }
@@ -244,23 +247,23 @@
     .submit-btn {
       display: inline-flex; align-items: center; justify-content: center; gap: 10px;
       width: 100%; padding: 14px;
-      background: linear-gradient(135deg, var(--saffron) 0%, var(--terracotta) 100%);
-      color: var(--cream);
+      background: linear-gradient(135deg, var(--saffron) 0%, var(--green) 100%);
+      color: var(--white);
       font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 700;
-      border: 1px solid var(--gold); border-radius: 3px; cursor: pointer;
+      border: none; border-radius: 3px; cursor: pointer;
       transition: filter 0.2s, transform 0.1s;
-      box-shadow: 0 4px 14px rgba(181,57,26,0.25);
+      box-shadow: 0 4px 14px rgba(19,136,8,0.2);
       margin-top: 10px;
     }
-    .submit-btn:hover:not(:disabled) { filter: brightness(1.1); }
+    .submit-btn:hover:not(:disabled) { filter: brightness(0.94); }
     .submit-btn:active:not(:disabled) { transform: scale(0.995); }
     .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; box-shadow: none; }
 
     /* ── SYSTEM CALLBACK NOTICES ── */
     .form-feedback { display: none; padding: 18px 22px; border-radius: 4px; margin-bottom: 28px; font-size: 0.9rem; line-height: 1.6; }
-    .form-feedback.success { display: block; background: #E8F5E9; border: 1px solid var(--success); color: var(--maroon-2); border-left: 4px solid var(--success); }
-    .form-feedback.error-msg { display: block; background: #FFEBEE; border: 1px solid var(--error); color: var(--maroon-2); border-left: 4px solid var(--error); }
-    .form-feedback a { color: var(--terracotta); text-decoration: underline; font-weight: 600; }
+    .form-feedback.success { display: block; background: var(--green-bg); border: 1px solid rgba(19,136,8,0.3); color: var(--ink-2); border-left: 4px solid var(--green); }
+    .form-feedback.error-msg { display: block; background: #FFEBEE; border: 1px solid rgba(204,34,0,0.3); color: var(--ink-2); border-left: 4px solid var(--error); }
+    .form-feedback a { color: var(--saffron); text-decoration: underline; font-weight: 600; }
 
     /* ── INTERACTION LOAD ELEMENT ── */
     .spinner {
@@ -273,8 +276,8 @@
 
     /* ── FOOTER STYLE MATCH ── */
     footer {
-      background: var(--maroon-2);
-      color: rgba(251,243,220,0.55);
+      background: var(--ink-2);
+      color: rgba(255,255,255,0.55);
       padding: 40px 5vw 30px; font-size: 0.84rem;
       border-top: 3px solid var(--gold);
       text-align: center;
