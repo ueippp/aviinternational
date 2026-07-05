@@ -216,6 +216,30 @@
     .field-error.visible { display: block; }
     textarea { resize: vertical; min-height: 110px; }
 
+    /* ── MULTI-SELECT CHECKBOXES ── */
+    .multi-check-group {
+      display: flex; flex-direction: column; gap: 8px;
+      padding: 10px 14px;
+      border: 1px solid rgba(90,15,26,0.15); border-radius: 3px;
+      background: var(--cream);
+    }
+    .check-option {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.88rem; color: var(--ink);
+      cursor: pointer; padding: 4px 2px;
+      transition: color 0.15s;
+    }
+    .check-option:hover { color: var(--saffron); }
+    .check-option input[type="checkbox"] {
+      width: 16px; height: 16px; flex-shrink: 0;
+      accent-color: var(--saffron);
+      cursor: pointer;
+      /* Reset to normal checkbox size, not full-width */
+      padding: 0; border: none; background: none;
+      box-shadow: none;
+    }
+    .check-option span { line-height: 1.4; }
+
     /* ── ACTION INTERNALS ── */
     .submit-btn {
       display: inline-flex; align-items: center; justify-content: center; gap: 10px;
@@ -389,7 +413,7 @@
         
         <div class="form-row">
           <div class="form-group">
-            <label for="business_type">Operational Alignment Type</label>
+            <label for="business_type">Type of Business</label>
             <select id="business_type" name="business_type">
               <option value="">— Select Profile —</option>
               <option>Grocery / Supermarket</option>
@@ -402,15 +426,29 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="products_interest">Primary Sourcing Pipeline</label>
-            <select id="products_interest" name="products_interest">
-              <option value="">— Select Range Focus —</option>
-              <option>Prayer &amp; Devotional Accoutrements</option>
-              <option>Indian Subcontinent Groceries</option>
-              <option>General Pantry Staples</option>
-              <option>Cultural Festival Specialized Lines</option>
-              <option>Omnichannel / All Categories</option>
-            </select>
+            <label>Products You're Interested In</label>
+            <div class="multi-check-group" id="products_interest_wrap">
+              <label class="check-option">
+                <input type="checkbox" name="products_interest" value="Prayer &amp; Devotional Items" />
+                <span>🪔 Prayer &amp; Devotional Items</span>
+              </label>
+              <label class="check-option">
+                <input type="checkbox" name="products_interest" value="Indian Grocery" />
+                <span>🌶️ Indian Grocery</span>
+              </label>
+              <label class="check-option">
+                <input type="checkbox" name="products_interest" value="General Grocery" />
+                <span>🌾 General Grocery</span>
+              </label>
+              <label class="check-option">
+                <input type="checkbox" name="products_interest" value="Indian Festival Items" />
+                <span>🎉 Indian Festival Items</span>
+              </label>
+              <label class="check-option">
+                <input type="checkbox" name="products_interest" value="All Categories" />
+                <span>✅ All Categories</span>
+              </label>
+            </div>
           </div>
         </div>
       </div>
@@ -482,7 +520,7 @@
 
       <button type="submit" class="submit-btn" id="submit-btn">
         <div class="spinner" id="spinner"></div>
-        <span id="btn-text">Transmit Trade Registration</span>
+        <span id="btn-text">Register</span>
       </button>
     </form>
   </div>
@@ -562,34 +600,41 @@
 
   function validateForm() {
     let ok = true;
+    let firstErrorEl = null;
 
     const company = val('company_name');
-    if (!company || company.length < 2) { showError('company_name','err-company',true); ok=false; }
+    if (!company || company.length < 2) { showError('company_name','err-company',true); ok=false; if (!firstErrorEl) firstErrorEl = document.getElementById('company_name'); }
     else { showError('company_name','err-company',false); }
 
     const abn = document.getElementById('abn').value.replace(/\s/g,'');
-    if (!abn || !/^\d{11}$/.test(abn)) { showError('abn','err-abn',true); ok=false; }
+    if (!abn || !/^\d{11}$/.test(abn)) { showError('abn','err-abn',true); ok=false; if (!firstErrorEl) firstErrorEl = document.getElementById('abn'); }
     else { showError('abn','err-abn',false); }
 
     const cname = val('contact_name');
-    if (!cname || cname.length < 2) { showError('contact_name','err-contact',true); ok=false; }
+    if (!cname || cname.length < 2) { showError('contact_name','err-contact',true); ok=false; if (!firstErrorEl) firstErrorEl = document.getElementById('contact_name'); }
     else { showError('contact_name','err-contact',false); }
 
     const rawPhone = document.getElementById('phone').value.trim();
     const digitsOnly = rawPhone.replace(/[\s\-\+\(\)]/g,'');
     if (!rawPhone || !/^[\d\s\+\-\(\)]{8,20}$/.test(rawPhone) || digitsOnly.length < 8) {
-      showError('phone','err-phone',true); ok=false;
+      showError('phone','err-phone',true); ok=false; if (!firstErrorEl) firstErrorEl = document.getElementById('phone');
     } else { showError('phone','err-phone',false); }
 
     const email = document.getElementById('email').value.trim();
     const emailRe = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
     if (!email || !emailRe.test(email) || email.length > 254) {
-      showError('email','err-email',true); ok=false;
+      showError('email','err-email',true); ok=false; if (!firstErrorEl) firstErrorEl = document.getElementById('email');
     } else { showError('email','err-email',false); }
 
     const pc = document.getElementById('postcode').value.trim();
     if (pc && !/^\d{4}$/.test(pc)) {
       document.getElementById('postcode').value = pc.replace(/\D/g,'').slice(0,4);
+    }
+
+    // Auto-scroll to first error field
+    if (firstErrorEl) {
+      firstErrorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      firstErrorEl.focus();
     }
 
     return ok;
@@ -632,6 +677,12 @@
       dateStyle: 'long', timeStyle: 'short', timeZone: 'Australia/Sydney'
     });
 
+    // Collect all checked product interests
+    const checkedProducts = Array.from(
+      document.querySelectorAll('input[name="products_interest"]:checked')
+    ).map(cb => cb.value);
+    const productsSelected = checkedProducts.length > 0 ? checkedProducts.join(', ') : 'Not specified';
+
     const params = {
       company_name:       val('company_name'),
       abn:                document.getElementById('abn').value.replace(/\s/g,''),
@@ -639,7 +690,7 @@
       phone:              sanitise(document.getElementById('phone').value.trim(), 20),
       email:              document.getElementById('email').value.trim().slice(0, 254),
       business_type:      val('business_type')      || 'Not specified',
-      products_interest:  val('products_interest')  || 'Not specified',
+      products_interest:  productsSelected,
       street:             val('street')             || '—',
       suburb:             val('suburb')             || '—',
       state:              val('state')              || '—',
@@ -665,7 +716,7 @@
     } finally {
       btn.disabled = false;
       spinner.style.display = 'none';
-      btnText.textContent = 'Transmit Trade Registration';
+      btnText.textContent = 'Register';
     }
   });
 
