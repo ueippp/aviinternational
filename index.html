@@ -554,55 +554,137 @@
     .contact-item-body p { line-height: 1.65; color: var(--ink); }
 
     /* ── FOOTER ── */
-    footer {
-      background: var(--ink-2);
-      color: rgba(255,255,255,0.6);
-      padding: 56px 5vw 32px; font-size: 0.84rem;
-      border-top: 4px solid var(--saffron);
-    }
-    .footer-inner {
-      display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 48px;
-      padding-bottom: 36px;
-      border-bottom: 1px solid rgba(232,130,26,0.2);
-      margin-bottom: 24px;
-    }
-    footer a { color: var(--saffron-2); text-decoration: none; }
-    footer a:hover { text-decoration: underline; color: var(--gold-soft); }
-    .footer-brand-name {
-      font-family: 'Marcellus', serif;
-      font-size: 1.4rem; color: var(--white); font-weight: 400; margin-bottom: 2px;
-    }
-    .footer-brand-name-hi {
-      font-family: 'Yatra One', serif;
-      font-size: 1.05rem; color: var(--saffron-2); margin-bottom: 12px;
-    }
-    .footer-brand-tag {
-      font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase;
-      color: var(--green-2); margin-bottom: 18px;
-    }
-    .footer-brand-desc { font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.75; }
-    .footer-col-title {
-      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em;
-      text-transform: uppercase; color: var(--saffron-2); margin-bottom: 4px;
-    }
-    .footer-col-title-hi {
-      font-family: 'Noto Serif Devanagari', serif;
-      font-size: 0.85rem; color: var(--green-2);
-      margin-bottom: 16px; letter-spacing: 0.02em; font-weight: 500;
-    }
-    .footer-contact-list { display: flex; flex-direction: column; gap: 13px; }
-    .footer-contact-row { display: flex; align-items: flex-start; gap: 10px; color: rgba(255,255,255,0.65); font-size: 0.84rem; line-height: 1.55; }
-    .footer-contact-row span.ico { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
-    .footer-links { display: flex; flex-direction: column; gap: 11px; }
-    .footer-links a { color: rgba(255,255,255,0.65); font-size: 0.86rem; text-decoration: none; transition: color 0.2s; }
-    .footer-links a:hover { color: var(--saffron-2); text-decoration: none; }
-    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
-    .footer-blessing {
-      text-align: center; margin-top: 18px;
-      font-family: 'Noto Serif Devanagari', serif;
-      color: var(--saffron-2); font-size: 0.9rem;
-      letter-spacing: 0.04em;
-    }
+    /* ── FOOTER ── */
+footer {
+    background: linear-gradient(180deg, #FFF9F1 0%, #F7F2E8 100%);
+    color: #4A4035;
+    padding: 56px 5vw 32px;
+    font-size: 0.84rem;
+    border-top: 4px solid var(--green);
+}
+
+.footer-inner {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr;
+    gap: 48px;
+    padding-bottom: 36px;
+    border-bottom: 1px solid rgba(19,136,8,0.18);
+    margin-bottom: 24px;
+}
+
+footer a {
+    color: var(--saffron);
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: var(--green);
+    text-decoration: underline;
+}
+
+.footer-brand-name {
+    font-family: 'Marcellus', serif;
+    font-size: 1.4rem;
+    color: var(--ink-2);
+    font-weight: 400;
+    margin-bottom: 2px;
+}
+
+.footer-brand-name-hi {
+    font-family: 'Yatra One', serif;
+    font-size: 1.05rem;
+    color: var(--saffron);
+    margin-bottom: 12px;
+}
+
+.footer-brand-tag {
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 18px;
+}
+
+.footer-brand-desc {
+    font-size: 0.85rem;
+    color: #5E564D;
+    line-height: 1.75;
+}
+
+.footer-col-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    margin-bottom: 4px;
+}
+
+.footer-col-title-hi {
+    font-family: 'Noto Serif Devanagari', serif;
+    font-size: 0.85rem;
+    color: var(--green);
+    margin-bottom: 16px;
+    letter-spacing: 0.02em;
+    font-weight: 500;
+}
+
+.footer-contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.footer-contact-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: #5E564D;
+    font-size: 0.84rem;
+    line-height: 1.55;
+}
+
+.footer-contact-row span.ico {
+    font-size: 1rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+}
+
+.footer-links a {
+    color: #5E564D;
+    font-size: 0.86rem;
+    transition: .2s;
+}
+
+.footer-links a:hover {
+    color: var(--green);
+}
+
+.footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    color: #6B5A4A;
+    border-top: 1px solid rgba(19,136,8,0.15);
+    padding-top: 20px;
+}
+
+.footer-blessing {
+    text-align: center;
+    margin-top: 18px;
+    font-family: 'Noto Serif Devanagari', serif;
+    color: var(--saffron);
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+}
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
