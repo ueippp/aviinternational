@@ -274,17 +274,39 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ── FOOTER STYLE MATCH ── */
+    /* ── FOOTER STYLE MATCH (LIGHT version) ── */
     footer {
-      background: var(--ink-2);
-      color: rgba(255,255,255,0.55);
-      padding: 40px 5vw 30px; font-size: 0.84rem;
-      border-top: 3px solid var(--gold);
+      background: var(--cream);
+      color: var(--muted);
+      padding: 40px 5vw 30px;
+      font-size: 0.84rem;
+      border-top: 4px solid var(--saffron);
       text-align: center;
     }
-    footer a { color: var(--gold-soft); text-decoration: none; }
-    footer a:hover { text-decoration: underline; color: var(--saffron-2); }
-    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; max-width: 1300px; margin: 0 auto; }
+    footer a {
+      color: var(--saffron);
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+      color: var(--saffron-2);
+    }
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      max-width: 1300px;
+      margin: 0 auto;
+      color: var(--muted);
+    }
+    .footer-bottom a {
+      color: var(--saffron);
+    }
+    .footer-bottom a:hover {
+      color: var(--saffron-2);
+    }
 
     /* ── RESPONSIVE ADAPTATIONS ── */
     @media (max-width: 1024px) {
@@ -529,7 +551,7 @@
   </div>
 </div>
 
-<!-- ── FOOTER BAR ── -->
+<!-- ── FOOTER BAR (LIGHT VERSION) ── -->
 <footer>
   <div class="footer-bottom">
     <span>&copy; <span id="yr"></span> AVI International. All rights reserved.</span>
@@ -541,7 +563,7 @@
 <script>
   // ── EmailJS API Configuration Parameters ──
   const EMAILJS_PUBLIC_KEY     = 'adeXn_zdkIeVT4Ju_';
-  const EMAILJS_SERVICE_ID     = 'service_x0ri7xj';
+  const EMAILJS_SERVICE_ID     = 'service_dtgmbtp';
   const EMAILJS_TEMPLATE_ADMIN = 'template_hvdafli';
   const EMAILJS_TEMPLATE_USER  = 'template_3litpx8';
 
