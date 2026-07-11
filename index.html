@@ -770,8 +770,8 @@
 
         /* ── FOOTER ── */
         footer {
-            background: var(--ink-2);
-            color: rgba(255,255,255,0.6);
+            background: var(--cream);
+            color: var(--muted);
             padding: 56px 5vw 32px;
             font-size: 0.84rem;
             border-top: 4px solid var(--saffron);
@@ -781,60 +781,96 @@
             grid-template-columns: 1.6fr 1fr 1fr;
             gap: 48px;
             padding-bottom: 36px;
-            border-bottom: 1px solid rgba(232,130,26,0.2);
+            border-bottom: 1px solid var(--border);
             margin-bottom: 24px;
         }
-        footer a { color: var(--saffron-2); text-decoration: none; }
-        footer a:hover { text-decoration: underline; color: var(--gold-soft); }
+        footer a {
+            color: var(--saffron);
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+            color: var(--saffron-2);
+        }
         .footer-brand-name {
             font-family: 'Marcellus', serif;
             font-size: 1.4rem;
-            color: var(--white);
+            color: var(--ink-2);
             font-weight: 400;
             margin-bottom: 2px;
         }
         .footer-brand-name-hi {
             font-family: 'Yatra One', serif;
             font-size: 1.05rem;
-            color: var(--saffron-2);
+            color: var(--saffron);
             margin-bottom: 12px;
         }
         .footer-brand-tag {
             font-size: 0.72rem;
             letter-spacing: 0.16em;
             text-transform: uppercase;
-            color: var(--green-2);
+            color: var(--green);
             margin-bottom: 18px;
         }
-        .footer-brand-desc { font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.75; }
+        .footer-brand-desc {
+            font-size: 0.85rem;
+            color: var(--muted);
+            line-height: 1.75;
+        }
         .footer-col-title {
             font-size: 0.72rem;
             font-weight: 700;
             letter-spacing: 0.16em;
             text-transform: uppercase;
-            color: var(--saffron-2);
+            color: var(--saffron);
             margin-bottom: 4px;
         }
         .footer-col-title-hi {
             font-family: 'Noto Serif Devanagari', serif;
             font-size: 0.85rem;
-            color: var(--green-2);
+            color: var(--green);
             margin-bottom: 16px;
             letter-spacing: 0.02em;
             font-weight: 500;
         }
         .footer-contact-list { display: flex; flex-direction: column; gap: 13px; }
-        .footer-contact-row { display: flex; align-items: flex-start; gap: 10px; color: rgba(255,255,255,0.65); font-size: 0.84rem; line-height: 1.55; }
+        .footer-contact-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            color: var(--muted);
+            font-size: 0.84rem;
+            line-height: 1.55;
+        }
         .footer-contact-row span.ico { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
-        .footer-links { display: flex; flex-direction: column; gap: 11px; }
-        .footer-links a { color: rgba(255,255,255,0.65); font-size: 0.86rem; text-decoration: none; transition: color 0.2s; }
-        .footer-links a:hover { color: var(--saffron-2); text-decoration: none; }
-        .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 11px;
+        }
+        .footer-links a {
+            color: var(--muted);
+            font-size: 0.86rem;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover {
+            color: var(--saffron);
+            text-decoration: none;
+        }
+        .footer-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+            color: var(--muted);
+        }
         .footer-blessing {
             text-align: center;
             margin-top: 18px;
             font-family: 'Noto Serif Devanagari', serif;
-            color: var(--saffron-2);
+            color: var(--saffron);
             font-size: 0.9rem;
             letter-spacing: 0.04em;
         }
@@ -916,7 +952,7 @@
             <span class="hero-h1-hindi" data-testid="hero-heading-hindi">आपका विश्वसनीय भारतीय आयातक</span>
 
             <p class="hero-desc" data-testid="hero-desc">
-                A proudly family-owned Indian import and wholesale business since 2009, deeply rooted in culture and tradition. We bring authentic prayer items, groceries, and festival goods — sourced directly from the soil of <em style="color:var(--gold-soft); font-style:normal;">Bhārat</em> —
+                A proudly <em style="color:var(--gold-soft); font-style:normal;">family-owned</em> Indian import and wholesale business since 2009, deeply rooted in culture and tradition. We bring authentic prayer items, groceries, and festival goods — sourced directly from the soil of <em style="color:var(--gold-soft); font-style:normal;">Bhārat</em> —
                 to households and retailers across Australia, with devotion and care.
             </p>
 
