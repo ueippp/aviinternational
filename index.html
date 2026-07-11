@@ -454,13 +454,30 @@
       box-shadow: 0 8px 24px rgba(232,130,26,0.15);
     }
 
-    .brand-emblem {
-      width: 64px; height: 64px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--saffron-bg) 0%, var(--green-bg) 100%);
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 18px; font-size: 1.6rem;
-      border: 2px solid var(--border);
+    .brand-logo {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 18px;
+    transition: transform .3s ease;
     }
+
+    .brand-logo {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    background: #fff;
+    border-radius: 12px;
+    padding: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.08);
+    display: block;
+    margin: 0 auto 18px;
+}
+
+.brand-card:hover .brand-logo {
+    transform: scale(1.08);
+}
     .brand-name {
       font-family: 'Marcellus', serif;
       font-size: 1.15rem; font-weight: 400; color: var(--ink-2); margin-bottom: 2px;
@@ -775,10 +792,11 @@
   </div>
   <div class="brands-grid">
     <div class="brand-card reveal" data-testid="brand-jai-kisan">
-      <div class="brand-emblem">🌾</div>
+      <img src="Jai Kisan.jpeg" alt="Jai Kisan" class="brand-logo">
       <div class="brand-name">Jai Kisan</div>
       <div class="brand-name-hi">जय किसान</div>
       <div class="brand-tag">Farmer's Pride</div>
+</div>
     </div>
     <div class="brand-card reveal" data-testid="brand-tiranga">
       <div class="brand-emblem">🇮🇳</div>
