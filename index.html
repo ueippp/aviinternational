@@ -976,6 +976,38 @@
             text-decoration: underline;
         }
 
+        /* ── MAP EMBED ── */
+        .map-container {
+            max-width: 100%;
+            margin-top: 48px;
+            display: flex;
+            justify-content: center;
+        }
+        .map-wrapper {
+            width: 100%;
+            max-width: 800px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease;
+            background: var(--white);
+        }
+        .map-wrapper:hover {
+            transform: scale(1.01);
+        }
+        .map-wrapper iframe {
+            width: 100%;
+            height: 400px;
+            display: block;
+            border: none;
+        }
+        @media (max-width: 768px) {
+            .map-wrapper iframe {
+                height: 300px;
+            }
+        }
+
         /* ── FOOTER ── */
         footer {
             background: var(--cream);
@@ -1428,6 +1460,13 @@
                     <span class="strong-hi">थोक संपर्क</span>
                     <p><a href="wholesale.html">Register your business →</a></p>
                 </div>
+            </div>
+        </div>
+
+        <!-- ── GOOGLE MAPS EMBED ── -->
+        <div class="map-container reveal">
+            <div class="map-wrapper">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3316.691603527345!2d150.94538037691342!3d-33.76863431387981!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b129967939919a3%3A0x924012f226dcaf42!2sAVI%20International%20(Impex)%20Pty%20Ltd!5e0!3m2!1sen!2sau!4v1783775802554!5m2!1sen!2sau" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
             </div>
         </div>
     </section>
