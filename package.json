@@ -1,0 +1,13 @@
+{
+  "name": "aviinternational",
+  "version": "1.0.0",
+  "description": "AVI International (Impex) - Indian Grocery Importers, Australia",
+  "private": true,
+  "scripts": {
+    "build": "echo 'Static HTML site - no build needed'",
+    "lint": "echo 'No linter configured'"
+  },
+  "dependencies": {
+    "@vercel/speed-insights": "^1.0.15"
+  }
+}
