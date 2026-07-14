@@ -1,0 +1,14 @@
+{
+  "name": "aviinternational",
+  "version": "1.0.0",
+  "description": "AVI International (Impex) - Indian Grocery Importers, Australia",
+  "scripts": {
+    "build": "echo 'Static site - no build step required'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@vercel/speed-insights": "^1.0.12"
+  }
+}
