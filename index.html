@@ -664,14 +664,136 @@
         .about-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
 
         .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 36px; }
-        .stat-box {
-            padding: 22px;
-            background: var(--white);
-            border-radius: 4px;
-            border-left: 4px solid var(--saffron);
-            border-top: 1px solid var(--border);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
+        /* ── STAT BOXES WITH HOVER EFFECTS ── */
+.about-stats { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px; 
+    margin-top: 36px; 
+}
+
+.stat-box {
+    padding: 22px;
+    background: var(--white);
+    border-radius: 4px;
+    border-left: 4px solid var(--saffron);
+    border-top: 1px solid var(--border);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ── Subtle background pattern on hover ── */
+.stat-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 30% 50%, rgba(232,130,26,0.03) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+.stat-box:hover::before {
+    opacity: 1;
+}
+
+/* ── HOVER EFFECTS ── */
+.stat-box:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.10);
+    border-left-color: var(--green);
+    border-top-color: var(--green);
+}
+
+/* ── Individual stat box variations ── */
+.stat-box:nth-child(1):hover {
+    border-left-color: var(--saffron);
+    box-shadow: 0 16px 40px rgba(232,130,26,0.15);
+}
+
+.stat-box:nth-child(2):hover {
+    border-left-color: var(--green);
+    box-shadow: 0 16px 40px rgba(19,136,8,0.15);
+}
+
+.stat-box:nth-child(3):hover {
+    border-left-color: var(--gold);
+    box-shadow: 0 16px 40px rgba(201,162,39,0.15);
+}
+
+.stat-box:nth-child(4):hover {
+    border-left-color: var(--saffron-2);
+    box-shadow: 0 16px 40px rgba(245,165,74,0.15);
+}
+
+/* ── Number animation ── */
+.stat-num {
+    font-family: 'Marcellus', serif;
+    font-size: 2.1rem;
+    font-weight: 400;
+    color: var(--saffron);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: inline-block;
+}
+
+.stat-box:hover .stat-num {
+    transform: scale(1.12) translateX(2px);
+    color: var(--green);
+}
+
+/* ── Description animation ── */
+.stat-desc {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: 4px;
+    transition: color 0.3s ease;
+}
+
+.stat-box:hover .stat-desc {
+    color: var(--ink-2);
+}
+
+.stat-desc .hi {
+    display: block;
+    font-family: 'Noto Serif Devanagari', serif;
+    color: var(--green);
+    font-size: 0.82rem;
+    margin-top: 2px;
+    transition: color 0.3s ease;
+}
+
+.stat-box:hover .stat-desc .hi {
+    color: var(--saffron);
+}
+
+/* ── Add a subtle shine effect ── */
+.stat-box::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        135deg,
+        transparent 0%,
+        rgba(255,255,255,0.05) 30%,
+        transparent 60%
+    );
+    transform: rotate(45deg) translateX(-100%);
+    transition: transform 0.8s ease;
+    pointer-events: none;
+}
+
+.stat-box:hover::after {
+    transform: rotate(45deg) translateX(100%);
+}
         .stat-num { font-family: 'Marcellus', serif; font-size: 2.1rem; font-weight: 400; color: var(--saffron); }
         .stat-desc { font-size: 0.82rem; color: var(--muted); margin-top: 4px; }
         .stat-desc .hi { display: block; font-family: 'Noto Serif Devanagari', serif; color: var(--green); font-size: 0.82rem; margin-top: 2px; }
