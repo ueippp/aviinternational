@@ -472,7 +472,117 @@
             box-shadow: 0 12px 32px rgba(19,136,8,0.1);
         }
 
-        .product-icon { font-size: 2.5rem; margin-bottom: 14px; }
+        /* ── PRODUCT ICON ANIMATIONS (Continuous) ── */
+.product-icon {
+    font-size: 2.5rem;
+    margin-bottom: 14px;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+/* ── Individual icon animations ── */
+
+/* 1. Prayer Items - Gentle floating + glow */
+.product-card:nth-child(1) .product-icon {
+    animation: prayerFloat 4s ease-in-out infinite;
+}
+
+@keyframes prayerFloat {
+    0% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 0px rgba(232,130,26,0)); }
+    50% { transform: translateY(-8px) scale(1.05); filter: drop-shadow(0 8px 20px rgba(232,130,26,0.2)); }
+    100% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 0px rgba(232,130,26,0)); }
+}
+
+/* 2. Indian Grocery - Gentle rotation + pulse */
+.product-card:nth-child(2) .product-icon {
+    animation: groceryPulse 5s ease-in-out infinite;
+}
+
+@keyframes groceryPulse {
+    0% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(-5deg) scale(1.08); }
+    50% { transform: rotate(0deg) scale(1); }
+    75% { transform: rotate(5deg) scale(1.08); }
+    100% { transform: rotate(0deg) scale(1); }
+}
+
+/* 3. Festival Items - Bounce + sparkle */
+.product-card:nth-child(3) .product-icon {
+    animation: festivalBounce 3.5s ease-in-out infinite;
+}
+
+@keyframes festivalBounce {
+    0% { transform: translateY(0) scale(1); }
+    30% { transform: translateY(-12px) scale(1.1); }
+    50% { transform: translateY(0) scale(1); }
+    70% { transform: translateY(-6px) scale(1.05); }
+    100% { transform: translateY(0) scale(1); }
+}
+
+/* 4. Well-Being Products - Gentle sway + glow */
+.product-card:nth-child(4) .product-icon {
+    animation: wellbeingSway 4.5s ease-in-out infinite;
+}
+
+@keyframes wellbeingSway {
+    0% { transform: rotate(-3deg) scale(1); filter: drop-shadow(0 0 0px rgba(19,136,8,0)); }
+    25% { transform: rotate(3deg) scale(1.04); filter: drop-shadow(0 4px 15px rgba(19,136,8,0.15)); }
+    50% { transform: rotate(-3deg) scale(1); filter: drop-shadow(0 0 0px rgba(19,136,8,0)); }
+    75% { transform: rotate(3deg) scale(1.04); filter: drop-shadow(0 4px 15px rgba(19,136,8,0.15)); }
+    100% { transform: rotate(-3deg) scale(1); filter: drop-shadow(0 0 0px rgba(19,136,8,0)); }
+}
+
+/* ── HOVER EFFECTS (Adds to the continuous animation) ── */
+.product-card:hover .product-icon {
+    animation-duration: 0.8s !important;
+    animation-iteration-count: infinite !important;
+}
+
+.product-card:nth-child(1):hover .product-icon {
+    animation: prayerFloatHover 0.8s ease-in-out infinite;
+}
+
+@keyframes prayerFloatHover {
+    0% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 0px rgba(232,130,26,0)); }
+    50% { transform: translateY(-12px) scale(1.15); filter: drop-shadow(0 8px 30px rgba(232,130,26,0.3)); }
+    100% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 0px rgba(232,130,26,0)); }
+}
+
+.product-card:nth-child(2):hover .product-icon {
+    animation: groceryPulseHover 0.8s ease-in-out infinite;
+}
+
+@keyframes groceryPulseHover {
+    0% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(-8deg) scale(1.15); }
+    50% { transform: rotate(0deg) scale(1); }
+    75% { transform: rotate(8deg) scale(1.15); }
+    100% { transform: rotate(0deg) scale(1); }
+}
+
+.product-card:nth-child(3):hover .product-icon {
+    animation: festivalBounceHover 0.6s ease-in-out infinite;
+}
+
+@keyframes festivalBounceHover {
+    0% { transform: translateY(0) scale(1); }
+    30% { transform: translateY(-16px) scale(1.15); }
+    50% { transform: translateY(0) scale(1); }
+    70% { transform: translateY(-8px) scale(1.1); }
+    100% { transform: translateY(0) scale(1); }
+}
+
+.product-card:nth-child(4):hover .product-icon {
+    animation: wellbeingSwayHover 0.8s ease-in-out infinite;
+}
+
+@keyframes wellbeingSwayHover {
+    0% { transform: rotate(-5deg) scale(1); filter: drop-shadow(0 0 0px rgba(19,136,8,0)); }
+    25% { transform: rotate(5deg) scale(1.12); filter: drop-shadow(0 4px 20px rgba(19,136,8,0.2)); }
+    50% { transform: rotate(-5deg) scale(1); filter: drop-shadow(0 0 0px rgba(19,136,8,0)); }
+    75% { transform: rotate(5deg) scale(1.12); filter: drop-shadow(0 4px 20px rgba(19,136,8,0.2)); }
+    100% { transform: rotate(-5deg) scale(1); filter: drop-shadow(0 0 0px rgba(19,136,8,0)); }
+}
         .product-name {
             font-family: 'Marcellus', serif;
             font-size: 1.2rem;
