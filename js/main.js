@@ -17,35 +17,30 @@ document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
     if (!slidesContainer) return;
 
     // ── CONFIGURE YOUR IMAGES HERE ──
-    const IMAGE_FOLDER = 'image_slide/';
+    const IMAGE_FOLDER = 'image_slide_new/';
     const IMAGE_NAMES = [
-        'image1.png',
-        'image2.png',
-        'image3.png',
-        'image4.png',
-        'image5.png',
-        'image6.png',
-        'image7.png',
-        'image8.png',
-        'image9.png',
-        'image10.png',
-        'image11.png',
-        'image12.png',
-        'image13.png',
-        'image14.png',
-        'image15.png',
-        'image16.png',
-        'image17.png',
-        'image18.png',
-        'image19.png',
-        'image20.png',
-        'image21.png',
-        'image22.png',
-        'image23.png',
-        'image24.png',
-        'image25.png',
-        'image26.png'
-        // Add all your .png image filenames here
+        'new`.jpeg',
+        'new2.jpeg',
+        'new3.jpeg',
+        'new4.jpeg',
+        'new5.jpeg',
+        'new6.jpeg',
+        'new7.jpeg',
+        'new8.jpeg',
+        'new9.jpeg',
+        'new10.jpeg',
+        'new11.jpeg',
+        'new12.jpeg',
+        'new13.jpeg',
+        'new14.jpeg',
+        'new15.jpeg',
+        'new16.jpeg',
+        'new17.jpeg',
+        'new18.jpeg',
+        'new19.jpeg',
+            
+        
+            // Add all your .png image filenames here
     ];
 
     function shuffleArray(arr) {
